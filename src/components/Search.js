@@ -79,7 +79,7 @@ export default function PrimarySearchAppBar(props) {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              onChange={props.searchForBook}
+              onChange={props.handleChange}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
