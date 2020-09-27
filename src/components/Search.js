@@ -66,7 +66,7 @@ export default function PrimarySearchAppBar(props) {
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
           <Typography className={classes.title} variant="h6" noWrap>
-            Reading List
+            Search
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

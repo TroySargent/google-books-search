@@ -1,51 +1,56 @@
-import React, {useState, useEffect} from 'react';
-import SimpleTable from './components/Table';
-import Container from '@material-ui/core/Container';
-import Search from './components/Search';
-import useDebounce from "./components/Debounce";
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Saved from "./pages/Saved";
+import Search from "./pages/Search";
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 export default function App() {
-  const [bookState, setBookState] = useState({
-    initialBooks: [],
-    searchedBooks: []
-  });
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const fetchData = async (query) => {
-    let {items} = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`, {
-        method: 'GET'
-    }).then(response => response.json())
-    setBookState({...bookState, searchedBooks : items});
-  };
-  
-  const debouncedSearchTerm = useDebounce(searchTerm);
-
-  useEffect(
-    () => {
-      if (debouncedSearchTerm) {
-        fetchData(debouncedSearchTerm);
-      } else {
-        setBookState({...bookState, searchedBooks : []});
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  ,[debouncedSearchTerm]);
-
-  const handleChange = e => {
-    setSearchTerm(e.target.value);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <>
-    <Search handleChange={handleChange}/>
-    <Container>
-      <SimpleTable
-        // TODO: add debouncer
-      books={bookState.searchedBooks.length ? bookState.searchedBooks: bookState.initialBooks}>
-      </SimpleTable>
-    </Container>
-    </>
+    <Router>
+      <div>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button renderAs="button">
+              <span>Search</span>
+            </Button>
+            </Link>
+            <Link to="/saved" style={{ textDecoration: 'none' }}>
+            <Button renderAs="button">
+              <span>Saved</span>
+            </Button>
+            </Link>
+
+      </div>
+       
+      
+ 
+
+
+        <Switch>
+          <Route exact path="/">
+            <Search/>
+          </Route>
+          <Route exact path="/saved">
+            <Saved/>
+          </Route>
+        </Switch>
+
+    </Router>
   );
 }
 
