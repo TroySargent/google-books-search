@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import SimpleTable from '../components/Table';
+import SearchTable from '../components/SearchTable';
 import Container from '@material-ui/core/Container';
 import Search from '../components/Search';
-import useDebounce from "../components/Debounce";
+import useDebounce from "../utils/Debounce";
 
 export default function App() {
   const [bookState, setBookState] = useState({
@@ -40,10 +40,9 @@ export default function App() {
     <>
     <Search handleChange={handleChange}/>
     <Container>
-      <SimpleTable
-        // TODO: add debouncer
+      <SearchTable
       books={bookState.searchedBooks.length ? bookState.searchedBooks: bookState.initialBooks}>
-      </SimpleTable>
+      </SearchTable>
     </Container>
     </>
   );

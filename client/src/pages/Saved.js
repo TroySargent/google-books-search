@@ -1,28 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import SimpleTable from '../components/Table';
+import SavedTable from '../components/SavedTable';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import API from '../utils/API';
 
 export default function App() {
   const [bookState, setBookState] = useState({
-    initialBooks: [],
-    searchedBooks: []
+    books: [],
   });
-
-  const fetchData = async (query) => {
-    let {items} = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`, {
-        method: 'GET'
-    }).then(response => response.json())
-    setBookState({...bookState, searchedBooks : items});
-  };
 
   useEffect(
     () => {
-
+      async function fetchData() {
+        const response = await API.getSaved();
+        setBookState({ books: response });
+      }
+      fetchData()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   ,[]);
 
 
@@ -36,10 +32,9 @@ export default function App() {
         </Toolbar>
       </AppBar>
     <Container>
-      <SimpleTable
-        // TODO: add debouncer
-      books={bookState.searchedBooks.length ? bookState.searchedBooks: bookState.initialBooks}>
-      </SimpleTable>
+      <SavedTable
+      books={bookState.books}>
+      </SavedTable>
     </Container>
     </>
   );

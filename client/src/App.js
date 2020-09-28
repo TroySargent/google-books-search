@@ -15,12 +15,12 @@ export default function App() {
     <Router>
       <div>
           <Link to="/" style={{ textDecoration: 'none' }}>
-          <Button renderAs="button">
+          <Button>
             <span>Search</span>
           </Button>
           </Link>
           <Link to="/saved" style={{ textDecoration: 'none' }}>
-          <Button renderAs="button">
+          <Button>
             <span>Saved</span>
           </Button>
           </Link>
