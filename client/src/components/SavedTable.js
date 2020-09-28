@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import API from '../utils/API';
 
 const useStyles = makeStyles({
   table: {
@@ -15,8 +16,10 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleTable(props) {
-  const handleClick = e => {
-    console.log(e.target.getAttribute("data-id"))
+  const handleDelete = e => {
+    let id = e.target.getAttribute("data-id");
+    API.deleteItem(id);
+    window.location.reload(false);
   }
 
   const classes = useStyles();
@@ -45,7 +48,7 @@ export default function SimpleTable(props) {
               <TableCell align="center">{book.description}</TableCell>
               <TableCell align="center"><img src={book.image} alt=""/></TableCell>
               <TableCell align="center"><a target="blank_" href={book.link}>Preview</a></TableCell>
-              <TableCell align="center"><button data-id={book._id} onClick={handleClick}>Delete</button></TableCell>
+              <TableCell align="center"><button data-id={book._id} onClick={handleDelete}>Delete</button></TableCell>
               </TableRow>
               )
             }) :  <TableRow>

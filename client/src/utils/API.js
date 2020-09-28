@@ -14,6 +14,11 @@ const API = {
 
             },
         }).then(response => response.json());
+    },
+    deleteItem: function(id) {
+        fetch(`/api/books/${id}`,{
+            method: 'DELETE',
+        }).then(response => response.json());
     }
 }
 
